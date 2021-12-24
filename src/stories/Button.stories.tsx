@@ -1,5 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { rest }from 'msw'
 
 import { Button } from './Button';
 
@@ -22,6 +23,17 @@ Primary.args = {
   primary: true,
   label: 'Button',
 };
+
+Primary.parameters = {
+  viewport: {
+    defaultViewport: 'mobile1'
+  },
+  msw: [
+    rest.get('/test/:hello', (req, res, ctx) => {
+      return res(ctx.json({hello: 'world'}))
+    })
+  ]
+}
 
 export const Secondary = Template.bind({});
 Secondary.args = {
